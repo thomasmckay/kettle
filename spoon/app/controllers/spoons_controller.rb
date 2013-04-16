@@ -1,17 +1,18 @@
 class SpoonsController < ::ApplicationController
 
   before_filter :authorize
-  before_filter :find_system, :only=>[:gss]
+  before_filter :find_system, :only=>[:jelly]
 
   def rules
     read_system = lambda{System.find(params[:id]).readable?}
     {
-      :gss => read_system
+      :jelly => read_system,
+      :welcome => lambda{true}
     }
   end
 
-  def gss
-    render :partial=>'gss', :locals=>{:system=>@system, :name => controller_display_name}
+  def jelly
+    render :partial=>'jelly', :locals=>{:system=>@system, :name => controller_display_name}
   end
 
   private
